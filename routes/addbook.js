@@ -61,11 +61,11 @@ const getBookById=(req,res)=>{
     }
 }
 
-const updateBookById=(req,res)=>{
+const updateBookById=(req,res)=>{S
     try{
        const {id}=req.params;
-       const {bname}=req.body;
-       console.log(bname)
+       const {book}=req.body;
+       console.log(book)
        console.log(id)
        client.query('update book_s set main_title=$1, author=$2, pub_year=$3, sub=$4, pub=$5, lan=$6, descr=$7, img=$8, url=$9 where pdfid=$10',[book['main_title'],book.author,book.pub_year,book.sub,book.pub,book.lan,book.descr,book.img,book.url,id],
        (err,data)=>{
