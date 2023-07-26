@@ -61,7 +61,7 @@ const getBookById=(req,res)=>{
     }
 }
 
-const updateBookById=(req,res)=>{S
+const updateBookById=(req,res)=>{
     try{
        const {id}=req.params;
        const {book}=req.body;
