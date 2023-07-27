@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const {getBook,createBook,getBookById,updateBookById,deleteBookById}=require('./routes/addbook');
 const app=express()
