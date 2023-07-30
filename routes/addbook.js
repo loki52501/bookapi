@@ -8,7 +8,7 @@ console.log((req.body))
         if(!book.main_title || !book.author ){
             throw Error("Send book in request body");
         }
-         client.query("insert into book_s (main_title, author, pub_year, sub, pub, lan, descr, img, url) values ($1,$2,$3,$4,$5,$6,$7,$8,$9)",[book['main_title'],book.author,book.pub_year,book.sub,book.pub,book.lan,book.descr,book.img,book.url],
+         client.query("insert into book_s (main_title, author, pub_year, sub, pub, lan, descr, img, url,type) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",[book['main_title'],book.author,book.pub_year,book.sub,book.pub,book.lan,book.descr,book.img,book.url,book.type],
         (err,data)=>{
             res.status(201).json({
             error:null,
