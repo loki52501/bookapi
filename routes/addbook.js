@@ -47,10 +47,11 @@ const getBookById=(req,res)=>{
         const {id}=req.params;
         client.query("select * from book_s where pdfid=$1",[id],
         (err,data)=>{
+           
             if (err) throw err;
             res.status(200).json({
             error:null,
-            book:data.row[0]
+            book:data.rows[0]
         })});
     }
     catch(error){
