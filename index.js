@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const {getBook,createBook,getBookById,updateBookById,deleteBookById}=require('./routes/addbook');
+const {getBook,getBookById,createBook,deleteBook,updateBook}=require('./routes/addbook');
 const app=express()
 const port = 8080
 
@@ -18,9 +18,9 @@ app.get('/',(req,res)=>{
 
 app.get('/book',getBook)
 app.get('/book/:id',getBookById)
-app.put('/book/:id',updateBookById)
+app.put('/book/:id',updateBook)
 app.post('/book',createBook)
-app.delete('/book/:id',deleteBookById)
+app.delete('/book/:id',deleteBook)
 
 app.listen(port,()=>{
     console.log("hello welcome to my port;")
