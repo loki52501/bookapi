@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+  <title>Caterpillar | Caterpillar Inc</title>
+  <link rel="icon" sizes="114x114" href="../../static/images/titleCat.png">
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+
+  <!-- Template Main CSS File -->
+ 
+
+  <link rel="stylesheet" href="{{url_for('static',filename = 'css/style.css')}}" media="screen">
+
+  <link rel="stylesheet" href="{{url_for('static',filename = 'css/form.css')}}" media="screen">
+  <link rel="stylesheet" href="{{url_for('static',filename = 'js/main.js')}}" media="screen">
+</head>
+
+<body >
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+        <div style="margin-left: 10%;">
+        
+        </div>
+        <nav id="navbar" class="navbar order-last order-lg-0" style="margin-left: 10%;">
+            <ul>
+                <li><li style="float: left;"><b>WhatsApp</b></li></li>
+              <li><a href="index.html" class="active">Home</a></li>
+    
+              <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+              <li><a href="contact.html">Contact</a></li>
+    
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          </nav><!-- .navbar -->
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+
+
+
+    </div>
+  </header><!-- End Header -->
+  <form class="my-form">
+    <div class="container">
+      <h1>Get in touch!</h1>
+      <ul>
+        <li>
+          <select>
+            <option selected disabled>-- Please choose an option --</option>
+            <option>Request Quote</option>
+            <option>Send Resume</option>
+            <option>Other</option>      
+          </select>
+        </li>
+        <li>
+        </form>    
+          <div class="grid grid-2">
+            <form method = "POST"enctype="multipart/form-data" action = "/upload">    
+            <input type="file" placeholder="User database" required accept=".csv"> 
+            <input type = "submit" value="Upload">  
+        </form> 
+          </div>
+        </li>
+     
+      
+        <!-- <li>
+          <input type="checkbox" id="terms">
+          <label for="terms">I have read and agreed with <a href="">the terms and conditions.</a></label>
+        </li>  
+        <li>
+          <div class="grid grid-3">
+            <div class="required-msg">REQUIRED FIELDS</div>
+            <button class="btn-grid" type="submit" disabled>
+              <span class="back">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/email-icon.svg" alt="">
+              </span>
+              <span class="front">SUBMIT</span>
+            </button>
+            <button class="btn-grid" type="reset" disabled>
+              <span class="back">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/eraser-icon.svg" alt="">
+              </span>
+              <span class="front">RESET</span>
+            </button> 
+          </div>
+        </li>    
+      </ul>-->
+    </div>
+  
+
+
+
+
+<script>
+
+const checkbox = document.querySelector('.my-form input[type="checkbox"]');
+const btns = document.querySelectorAll(".my-form button");
+
+checkbox.addEventListener("change", function () {
+  const checked = this.checked;
+  for (const btn of btns) {
+    checked ? (btn.disabled = false) : (btn.disabled = true);
+  }
+});
+
+
+</script>
+
+
+    
+
+
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
