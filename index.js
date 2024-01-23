@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 
 const {getBook,getBookById,createBook,deleteBook,updateBook}=require('./routes/addbook');
+const {  LoginApi } = require('./routes/auth_routes');
+const { AuthenticateToken } = require('./auth/auth');
 const app=express()
 const port = 8080
 
@@ -15,12 +17,12 @@ app.get('/',(req,res)=>{
       }
     )
 })
-
-app.get('/book',getBook)
-app.get('/book/:id',getBookById)
-app.put('/book/:id',updateBook)
-app.post('/book',createBook)
-app.delete('/book/:id',deleteBook)
+app.post('/login',LoginApi)
+app.get('/book',AuthenticateToken,getBook)
+app.get('/book/:id',AuthenticateToken,getBookById)
+app.put('/book/:id',AuthenticateToken,updateBook)
+app.post('/book',AuthenticateToken,createBook)
+app.delete('/book/:id',AuthenticateToken,deleteBook)
 
 app.listen(port,()=>{
     console.log("hello welcome to my port;")

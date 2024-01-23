@@ -1,22 +1,22 @@
 const { DataTypes } =require('sequelize');
 const sequelize =require('../config/db.js');
 
-const Student = sequelize.define('Student', {
-  StudentID: {
+const Student = sequelize.define('student', {
+  studentid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  StudentName: {
+  studentname: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  StudentEmail: {
+  studentemail: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
   },
-  StudentPassword: {
+  studentpassword: {
     type: DataTypes.STRING,
     allowNull: false,
   },

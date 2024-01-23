@@ -32,7 +32,13 @@ const sequelize =require('../config/db');
     },
     booktype:{
         type:DataTypes.STRING
-    }
+    },
+    bookdescription:{
+      type:DataTypes.STRING
+  },
+  bookpublisheddate:{
+    type:DataTypes.DATE,
+  }
   });
 
   module.exports=Book;

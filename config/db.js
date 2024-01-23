@@ -12,14 +12,10 @@ const sequelize = new Sequelize({
   host: process.env.DBConfigLink,
   port: 5432,
   dialect: "postgres",
-  define:{
-    freezeTableName: true
+  define: {
+    freezeTableName: true,
   },
   dialectOptions: {
-    ssl: {
-      require: true, // This will help you. But you will see nwe error
-      rejectUnauthorized: false // This line will fix new error
-    }
   },
 });
 
