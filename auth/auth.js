@@ -1,14 +1,30 @@
 const jwt =require( 'jsonwebtoken');
 
 function AuthenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization']; //Bearer TOKEN
-  const token = authHeader && authHeader.split(' ')[1];
-  if (token == null) return res.status(401).json({error:"Null token"});
+  const token = req.cookies.access_token;
+  console.log(token)
+  if(token===undefined) return res.status(500).json({error:"you are not allowed here"})
+  else if (token.tokens === undefined) return res.status(401).json({error:"Null token"});
   console.log("Auth1 Done");
-  console.log("token1: ", token,authHeader);
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, user) => {
-    if (error) return res.status(403).json({error : error.message});
-    //req.user = user;
+  console.log("token1: ", token.Refreshtokens);
+  jwt.verify(token.tokens, process.env.ACCESS_TOKEN_SECRET, (error, user) => {
+    if (error) {
+      if(token.Refreshtokens)
+      {
+        jwt.verify(token.Refreshtokens,process.env.ACCESS_TOKEN_SECRET,(error,user)=>{
+          if(error)  return res.status(403).json({error : error.message});
+        const tk=jwt.sign({userId:user.userId},process.env.ACCESS_TOKEN_SECRET,{
+          expiresIn: '2m',
+          });
+          token.tokens=tk;
+          console.log(token)
+          res.cookie('access_token',token,{
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+          });
+        })
+      }
+    }//req.user = user;
     console.log("Auth2 Done");
     next();
   });

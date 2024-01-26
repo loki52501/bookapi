@@ -1,13 +1,14 @@
-const express =require( 'express');
 const jwt =require( 'jsonwebtoken');
-const pool =require( '../config/db');
 const bcrypt =require( 'bcrypt');
 const Student=require('../models/student');
+const Admin=require('../models/admin')
 
 const LoginApi=('/login', async (req, res) => {
   try {
-    const { id, password } = req.body;
-    const students = await Student.findByPk(id).then(async(data)=>{
+    const { id, password,user } = req.body;
+    if(user==='Student')
+    {
+  await Student.findByPk(id).then(async(data)=>{
         if(!data) return res.status(401).json({error:"rollno is incorrect"});
         else
         {
@@ -16,23 +17,56 @@ const LoginApi=('/login', async (req, res) => {
 
         //JWT
     const student =data.dataValues;
- console.log(process.env.ACCESS_TOKEN_SECRET);
-    const tokens = jwt.sign({ userId: student.studentid }, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: '1h',
+const tokens=jwt.sign({ userId: student.studentid }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: '2m',
       });
-      console.log({tokens});
+      const Refreshtokens = jwt.sign({ userId: student.studentid }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: '1d',
+        });
     //res.cookie('refresh_token', tokens.refreshToken, {...(process.env.COOKIE_DOMAIN && {domain: process.env.COOKIE_DOMAIN}) , httpOnly: true,sameSite: 'none'});
-    res.status(200).json({tokens});
+    return res
+    .cookie("access_token", {tokens,Refreshtokens}, {
+      httpOnly: true,
+      secure: false,
+    })
+    .status(200)
+    .json({ message: "Logged in successfully 😊 👌" });
         }
 
-    });
-   
- 
-     
-    
-    //res.render('dashboard');
-    //res.redirect("/api/auth/dashboard");
-    // return res.redirect("/api/auth/dashboard");
+    });}
+    else if(user==='Admin')
+    {   
+
+    await Admin.findByPk(id).then(async(data)=>{
+        if(!data) return res.status(401).json({error:"rollno is incorrect"});
+        else
+        {     
+
+            const validPassword = await bcrypt.compare(password, data.dataValues.adminpassword);
+            if (!validPassword) return res.status(401).json({error: "Incorrect password"});
+
+        //JWT
+    const admin =data.dataValues;
+ console.log(process.env.ACCESS_TOKEN_SECRET);
+    const tokens= jwt.sign({ userId: admin.adminid }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: '1h',
+      });
+      const Refreshtokens = jwt.sign({ userId: admin.adminid }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: '1h',
+        });
+      console.log({tokens});
+    //res.cookie('refresh_token', tokens.refreshToken, {...(process.env.COOKIE_DOMAIN && {domain: process.env.COOKIE_DOMAIN}) , httpOnly: true,sameSite: 'none'});
+    return res
+    .cookie("access_token", {tokens,Refreshtokens}, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({ message: "Logged in successfully 😊 👌" });
+}});
+      }
+       else{
+        throw {message:"not a valid user"};}
   } catch (error) {
     res.status(401).json({error: error.message});
   } 

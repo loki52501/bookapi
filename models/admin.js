@@ -1,22 +1,22 @@
 const { DataTypes } =require('sequelize');
 const sequelize =require('../config/db.js');
 
- const Admin = sequelize.define('Admin', {
-  AdminID: {
+ const Admin = sequelize.define('admin', {
+  adminid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  AdminName: {
+  adminname: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  AdminEmail: {
+  adminemail: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
   },
-  AdminPassword: {
+  adminpassword: {
     type: DataTypes.STRING,
     allowNull: false,
   },
