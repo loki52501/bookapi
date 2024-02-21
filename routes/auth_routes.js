@@ -1,11 +1,13 @@
 const jwt =require( 'jsonwebtoken');
 const bcrypt =require( 'bcrypt');
 const Student=require('../models/student');
-const Admin=require('../models/admin')
+const Admin=require('../models/admin');
+const Login_History = require('../models/logging');
 
 const LoginApi=('/login', async (req, res) => {
   try {
     const { id, password,user } = req.body;
+   
     if(user==='Student')
     {
   await Student.findByPk(id).then(async(data)=>{
@@ -17,12 +19,15 @@ const LoginApi=('/login', async (req, res) => {
 
         //JWT
     const student =data.dataValues;
+    Login_History.create({studentid:student.studentid})
+
 const tokens=jwt.sign({ userId: student.studentid }, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: '2m',
       });
       const Refreshtokens = jwt.sign({ userId: student.studentid }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '1d',
         });
+
     //res.cookie('refresh_token', tokens.refreshToken, {...(process.env.COOKIE_DOMAIN && {domain: process.env.COOKIE_DOMAIN}) , httpOnly: true,sameSite: 'none'});
     return res
     .cookie("access_token", {tokens,Refreshtokens}, {
@@ -47,7 +52,6 @@ const tokens=jwt.sign({ userId: student.studentid }, process.env.ACCESS_TOKEN_SE
 
         //JWT
     const admin =data.dataValues;
- console.log(process.env.ACCESS_TOKEN_SECRET);
     const tokens= jwt.sign({ userId: admin.adminid }, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: '1h',
       });

@@ -7,6 +7,8 @@ const { AuthenticateToken } = require('./auth/auth');
 const { CreateUser, getStudent, CreateStudent, getStudentById } = require('./routes/adduser');
 const { CreateAdmin, getAdmin, getAdminById } = require('./routes/addadmin');
 const { Logout } = require('./routes/logout');
+const { Uploads } = require('./controller/signupc');
+const multer=require('multer')
 const app=express()
 const port = 8080
 
@@ -21,6 +23,8 @@ app.get('/',(req,res)=>{
       }
     )
 })
+// Set up multer to handle file uploads
+const upload = multer({ dest: 'uploads/' });
 app.post('/login',LoginApi)
 app.post('/register',CreateStudent)
 app.get('/book',AuthenticateToken,getBook)
@@ -33,6 +37,7 @@ app.get('/admin',getAdmin);
 app.get('/admin/:id',getAdminById);
 app.get('/logout',AuthenticateToken,Logout);
 app.get('/student/:id',AuthenticateToken,getStudentById);
+app.post('/uploads',upload.single('file'),Uploads);
 
 app.listen(port,()=>{
     console.log("hello welcome to my port;")
